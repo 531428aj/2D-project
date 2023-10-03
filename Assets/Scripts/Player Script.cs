@@ -49,9 +49,9 @@ public class PlayerScript : MonoBehaviour
             sr.flipX = false;
             anim.SetBool("Running", true);
         }
-        
+        if (Input.GetKey("e") == true)
         {
-
+            anim.SetBool("Attack", true);
         }
     }
 
@@ -96,6 +96,20 @@ public class PlayerScript : MonoBehaviour
 
 }
 
-    
+/* use this later
+ private void OnCollisionEnter2D(Collisions2D collision)
+{
+    if(collision != null && collision.gameObject.name == "Player")
+    {
+        Destroy(gameObject);
+    }
+}
 
-
+private void OnCollisionTrigger2D(Collider2d collider)
+{
+    if(collider != null && collider.gameObject.name == "Player")
+    {
+        Destroy(gameObject);
+    }
+}
+*/
