@@ -30,7 +30,6 @@ public class PlayerScript : MonoBehaviour
         GroundCheck();
 
         anim.SetBool("Running", false);
-       // anim.SetBool("Jump", false);
 
 
         rd = GetComponent<Rigidbody2D>();
@@ -70,7 +69,7 @@ public class PlayerScript : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        //Gizmos.DrawWireCube(transform.position-transform.up * castDistance, boxSize);
+ 
     }
 
     void GroundCheck()
