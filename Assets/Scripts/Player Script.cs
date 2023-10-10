@@ -9,17 +9,17 @@ public class PlayerScript : MonoBehaviour
 
 {
     private Animator anim;
-    SpriteRenderer sr;
-    float speed = 3.5f;
+    float speed = 10.5f;
     public Vector2 boxSize;
     public float castDistance;
     public LayerMask groundLayer;
+    HelperScript helper;
     // Start is called before the first frame update
     void Start()
     {
         print("Start");
         anim = GetComponent<Animator>();
-        sr = GetComponent<SpriteRenderer>();
+        helper = gameObject.AddComponent<HelperScript>();
     }
 
     // Update is called once per frame
@@ -35,23 +35,29 @@ public class PlayerScript : MonoBehaviour
         rd = GetComponent<Rigidbody2D>();
         if (Input.GetKeyDown("w") == true)
         {
-            rd.AddForce(new Vector3(0, 5, 0), ForceMode2D.Impulse);
+            rd.AddForce(new Vector3(0, 8, 0), ForceMode2D.Impulse);
         }
         if (Input.GetKey("a") == true)
         {
-            transform.position = new Vector2(transform.position.x - (1 * Time.deltaTime), transform.position.y);
+            transform.position = new Vector2(transform.position.x - (3 * Time.deltaTime), transform.position.y);
             anim.SetBool("Running", true);
-            sr.flipX = true;
+            helper.FlipObject(true);
         }
         if (Input.GetKey("d") == true)
         {
-            transform.position = new Vector2(transform.position.x + (1 * Time.deltaTime), transform.position.y);
-            sr.flipX = false;
+            transform.position = new Vector2(transform.position.x + (3 * Time.deltaTime), transform.position.y);
             anim.SetBool("Running", true);
+
+            helper.FlipObject(false);
+
         }
         if (Input.GetKey("e") == true)
         {
             anim.SetBool("Attack", true);
+        }
+        if (Input.GetKey("space"))
+        {
+            helper.FlipObject(true);
         }
     }
 
@@ -95,21 +101,3 @@ public class PlayerScript : MonoBehaviour
 
 
 }
-
-/* use this later
- private void OnCollisionEnter2D(Collisions2D collision)
-{
-    if(collision != null && collision.gameObject.name == "Player")
-    {
-        Destroy(gameObject);
-    }
-}
-
-private void OnCollisionTrigger2D(Collider2d collider)
-{
-    if(collider != null && collider.gameObject.name == "Player")
-    {
-        Destroy(gameObject);
-    }
-}
-*/
