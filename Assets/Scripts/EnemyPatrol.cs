@@ -12,6 +12,7 @@ public class EnemyPatrol : MonoBehaviour
     private Transform currentPoint;
     HelperScript helper;
     public float speed;
+    bool isGrounded;
 
     // Start is called before the first frame update
     void Start()
@@ -20,12 +21,18 @@ public class EnemyPatrol : MonoBehaviour
         anim = GetComponent<Animator>();
         currentPoint = pointB.transform;
         anim.SetBool("Enemy walk", true);
+        helper = gameObject.AddComponent<HelperScript>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        isGrounded = helper.ExtendedRayCollisionCheck(0, -0.4f);
+        if (isGrounded == false)
+        {
+            helper.FlipObject(true);
+        }
+
     }
     private void OnDrawGizmos()
     {
