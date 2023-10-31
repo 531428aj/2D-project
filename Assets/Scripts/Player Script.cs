@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+using Object = System.Object;
 
 public class PlayerScript : MonoBehaviour
 
@@ -12,10 +15,11 @@ public class PlayerScript : MonoBehaviour
     float speed = 10.5f;
     public Vector2 boxSize;
     public float castDistance;
-    
+
     HelperScript helper;
     bool isGrounded;
     Rigidbody2D rb;
+    public GameObject weapon;
 
 
     // Start is called before the first frame update
@@ -27,9 +31,10 @@ public class PlayerScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
+
     // Update is called once per frame
 
-    
+
     void Update()
     {
 
@@ -43,7 +48,7 @@ public class PlayerScript : MonoBehaviour
         {
             rb.AddForce(new Vector3(0, 8, 0), ForceMode2D.Impulse);
             anim.SetBool("Jump", false);
-         
+
         }
         if (isGrounded == false)
         {
@@ -64,7 +69,7 @@ public class PlayerScript : MonoBehaviour
             helper.FlipObject(false);
 
         }
-        if (Input.GetKey("e") == true)
+        if (Input.GetKey("l") == true)
         {
             anim.SetBool("Attack", true);
         }
@@ -72,14 +77,25 @@ public class PlayerScript : MonoBehaviour
         {
             helper.FlipObject(true);
         }
+        int moveDirection = 1;
+        if (Input.GetKeyDown("e"))
+        {
+            // Instantiate the bullet at the position and rotation of the player
+            GameObject clone;
+            clone = Instantiate(weapon, transform.position, transform.rotation);
+
+
+            // get the rigidbody component
+            Rigidbody2D rb = clone.GetComponent<Rigidbody2D>();
+
+
+            // set the velocity
+            rb.velocity = new Vector3(15 * moveDirection, 0, 0);
+
+
+            // set the position close to the player
+            rb.transform.position = new Vector3(transform.position.x, transform.position.y + 0, transform.position.z + 1);
+        }
+
     }
-
-   
-    }
- 
-    
-
-  
-
-
-
+}
